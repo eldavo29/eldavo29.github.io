@@ -2,6 +2,12 @@
 title: "Conceptos y aplicación de la distribucion normal"
 author: "Rey D. Molina"
 date: "10/2/2021"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    toc_depth: 3
+    number_sections: yes
 ---
 
 ```{r setup, include=FALSE}
