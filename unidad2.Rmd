@@ -1,0 +1,330 @@
+---
+title: "Conceptos y aplicación de la distribucion normal"
+author: "Rey D. Molina"
+date: "10/2/2021"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+```{r, echo=FALSE}
+graf.nor.s <- function(z, color = "grey", para = c(0, 1)){
+  mu <- para[1]; sig = para[2]
+  if(length(z) == 1){
+    x1 = mu  - 3.5 * sig ; x2 = z
+  }
+  else{
+    x1 <- z[1]; x2 <- z[2] 
+  }
+  
+  
+  x <- seq(mu - 3.5 * sig, mu + 3.5 * sig, length = 200)
+  densidad <- dnorm(x, mu, sig)
+  plot(x, densidad , type ='l', col = 'blue', lwd = 1, ylab = "density", ylim = c(min(densidad), max(densidad)), axes = FALSE)
+  polygon(c(x1, seq(x1, x2, length = 30), x2), c(0, dnorm(seq(x1, x2, length = 30), mu, sig),0), 
+          col = color)
+  lines(c(x1,x1), c(0, dnorm(x1, mu, sig)), col = 3, lwd =2)
+  lines(c(x2,x2), c(0, dnorm(x2, mu, sig)), col = 3, lwd =2)
+  lin_axis <- mu + sig * c(-3.5, -2, 0, 2, 3.5)
+  axis(side = 1, c(z, lin_axis), tcl= -0.3)
+  lines(x, densidad, col= "blue", lwd = 3)
+  abline(h = 0)
+}
+```
+
+```{r, echo = F}
+graf.dosc <- function(p = 0.05 , para = c(0, 1), color = "red", cola = "dos"){
+  
+  if (cola == "dos"){
+    p <- p / 2
+  } 
+  q <- 1 - p
+  
+  mu <- para[1]; sig = para[2]
+  xi <- qnorm(p, mu, sig) 
+  xd <- qnorm(q, mu, sig)
+  x1 <- mu - 4 * sig; x2 <- mu + 4 * sig
+  
+  
+  x <- seq(mu - 3.5 * sig, mu + 3.5 * sig, length = 200)
+  densidad <- dnorm(x, mu, sig)
+  plot(x, densidad , type ='l', col = 'blue', lwd = 1, ylab = "density", ylim =   c(min(densidad), max(densidad)), axes = FALSE)
+  
+  if(cola == "dos" | cola == "izq"){
+    polygon(c(x1, seq(x1, xi, length = 30), xi), 
+            c(0, dnorm(seq(x1, xi, length = 30), mu, sig),0), col = color)
+    lines(c(xi,xi), c(0, dnorm(xi, mu, sig)), col = 3, lwd =4)
+    
+  }
+  if(cola == "dos" | cola == "der"){
+    polygon(c(xd, seq(xd, x2, length = 30), xd),
+            c(0, dnorm(seq(xd, x2, length = 30), mu, sig),0), col = color)
+    lines(c(xd,xd), c(0, dnorm(xd, mu, sig)), col = 3, lwd =4)
+    
+  }
+  axis(side = 1, round(c(xi, mu, xd), 3),  tcl= -0.3)
+  
+  lines(x, densidad, col= "blue", lwd = 3)
+  abline(h = 0)
+  
+}
+```
+
+# Distribución normal
+
+## Introducción
+
+La distribución continua de probabilidad mas importante en todo el campo
+de la estadística es la distribución normal, su grafica que se denomina
+**curva normal**, es la curva con forma de campana, la cual describa
+aproximadamente muchos fenómenos que ocurren en la naturaleza, la
+industria y la investigación.A menudo se denomina distribución
+gaussiana, en honor a Kart Friedrich Gauss (1777-1855), también campana
+de Gauss.
+
+### Función de densidad de probabilidad
+
+Una variable continua X que tiene una distribución en forma de campana
+se llama variable aleatoria normal y la función de densidad de
+probabilidad de una variable aleatoria normal $X$, con media $\mu$ y
+desviación estándar $\sigma$, es
+
+$$ f(x; \mu, \sigma) = \dfrac{1}{\sqrt{2\pi}\sigma}e^{-\frac{1}{2}\frac{(x-\mu)^2}{\sigma}} $$
+
+donde $\pi = 3.14159$ y $e = 2.71828$. Es comun llamar a la distrubución
+normal como `curva normal`. Dado que la distribución normal no tiene
+parámetro de forma, siempre mantiene la misma forma de campana, tiene un
+parametros de localización $\mu$ que nos indica donde se centra la
+distribución y un parametros de escala $\sigma$ que da la escala al eje
+`x`. En la siguiente figura se presenta la curva normal con $\mu =0$, y
+$\sigma = 1$ llamada curva normal estándar.
+
+```{r, fig.show ='hold', out.width= '40%', fig.align='center', fig.cap= "Curva normal" ,echo = F}
+graf.nor.s(-3.5, color = "green")
+
+```
+
+### Propiedades de la curva normal.
+
+-   La moda que es el punto sobre el eje horizontal donde la curva es un
+    máximo, ocurre en $x = \mu$, 
+-   La curva es simétrica alrededor del eje vertical a través de la
+    media $\mu$
+-   La curva tiene sus puntos de inflexión en $\mu +- \sigma$, es
+    cóncava hacia abajo si $\mu - \sigma <= x <= \mu + \sigma$ , y es
+    cóncava hacia arriba en cualquier otro punto.
+-   La curva normal se aproxima al eje horizontal de manera asintótica
+    conforme nos alejamos de la media en cualquier dirección.
+-   El área total bajo la curva y sobre el eje horizontal es igual a 1
+
+### Distribucion normal estándar
+
+Las observaciones de cualquier variable aleatoria $x$ pueden se
+transformada a un nuevo conjunto de observaciones de una variable
+aleatoria con media 0 y varianza 1, esto puede realizarse con la
+transformación $$ Z = \dfrac{x-\mu}{\sigma}$$ La distribución de una
+variable aleatoria con media 0 ($\mu = 0$)y varianza 1 ($\sigma^2 =1$)
+se le llama distribución normal estándar. Así $Z ~ n(0,1)$
+
+
+### Ejemplo 1.12
+
+Dada una distribución normal con $\mu = 50$ y $\sigma =10$. Encuentre la
+probabilidad de que X tome un valor
+
+a)  Menor de 48
+b)  Mayor de 48
+c)  Entre 45 y 62
+d)  El valor de $k$ que deja un total del 45% de los datos a la derecha
+
+**Solución**
+
+**a) Menor de 48.** $\Pr(x < 48)$
+
+En ete problema debemos encontrar el área bajo la curva a la izquierda
+de 48 como se muestra en la fig 2. Sin embargo para utilizar las
+trabajas de distribución normal estándar debemos primero estandarizar el
+valor de x = 48. $$ z = \dfrac{48 - 50}{10} = -0.2$$
+
+De esta manera $\Pr(x<48) = \Pr(z<-0.2)$ como se muestra en la figura 2,
+del lado izquierdo se presenta una curva normal con $\mu =50$ y
+$\sigma = 10$, miestras que del lado derecho se presenta la distribución
+normal estándar. Ambas áreas bajo la curva son iguales.
+
+La función `=DISTR.NORM.ESTAND.N(-0.2,1)` da como resultado
+$\Pr(z<-0.2) = 0.4207$, es decir $\Pr(x<48)=0.4207$.
+
+```{r,fig.show ='hold', out.width= '45%', fig.align='center', fig.cap= "Curva normal" ,echo = F}
+graf.nor.s(48, para = c(50,10))
+graf.nor.s(-0.2)
+```
+
+**b) Mayor que 48.** $\Pr(x>48)$
+
+Como se habia mencionado anteriormente el área bajo la curva es 1,
+entonces al sumar la probabilidad que x sea menor que 48 con la
+probabilidad que x sea mayor de 48 tenemos el área total.
+$$\Pr(x<480) +\Pr(x>48) =1$$ por sustracción
+$$ \Pr(x>48) =1-\Pr(x<480) = 1-0.4207=0.5793$$
+
+**c) Entre 45 y 62** $\Pr(45<x<62)$ Para encotrar esta probabiliada
+primero encontramos $\Pr(x<62)$ el área bajo la curva a la izquierda de
+62 (primer gráfico de la Figura 3). Sin embargo el área que nos interesa
+es la que se encuentra entre $45<x<62$ por lo que se le debe restar
+$\Pr(x<45)$ (grafico del medio de la figura 2) para que resulte el área
+del intervalo (grafico de la derecha de la figura 2).
+
+$$\Pr(45<x<62) = \Pr(x<62)-\Pr(x<45)$$ Para encontrar estos valores
+estandarizamos $z_1 = \dfrac{45 - 50}{10} = -0.5$ y
+$z_2 = \dfrac{62 - 50}{10} = 1.2$. Así
+
+$\Pr(x<45) = \Pr(z_1<-0.5)=0.3085$ `=DISTR.NORM.ESTAND.N(-0.5,1)`
+
+$\Pr(x<62) = \Pr(z_2<1.2)=0.8849$ `=DISTR.NORM.ESTAND.N(1.2,1)` y
+
+$Pr(45<x<62) = \Pr(x<62)-\Pr(x<45)=0.8849-0.3085 = 0.5764$
+
+```{r, fig.show ='hold', out.width= '30%', fig.align='center', fig.cap= "Área bajo la curva. a) Iquierda de 0.62, b) Iquierda de 0.45, c) Entre 0.45 y 0.62 ", echo = F}
+par(mar = c(4, 4, .2, .1))
+graf.nor.s(62, para = c(50, 10))
+graf.nor.s(45, para = c(50,10), color = 2)
+graf.nor.s(c(45, 62), para = c(50, 10))
+```
+
+**d) El valor x que deje un total del 45% de los datos a la derecha**
+$\Pr(X>x) = 0.45$.
+
+En este caso el procedimiento es inverso, contamos con la probabilidad
+(0.45), pero desconocemos el valor de x.
+
+1.  Primero debemos cambiar el signo $>$ por $<$.
+
+$$\Pr(X<x)= 1 - \Pr(X>x)= 1- 0.45 = 0.55$$
+
+2.  Encontrar el valor z tal que deje un área de 0.55 a la izquierda de
+    la distribucion normal estándar $z_{0.55}$. La función en EXCEL
+    `=INV.NORM.ESTAND(0.55)` $$\Pr(Z<z_{0.55})=0.55 = 0.1257$$
+
+3.  Convertir el valor $z_{0.55}$ en un valor $x$ al despejar $x$ de la
+    estandarización
+
+$$x=\mu+\sigma*z_{0.55}$$ $$x=50+10*0.1257 = 51.25$$
+
+```{r, fig.show ='hold', out.width= '45%',fig.align='center', fig.cap= "Area de 0.45 bajo la curva derecha", echo = F}
+graf.dosc(0.45, par = c(50,10), cola = "der")
+```
+
+### Ejemplo 1.13
+
+Cierto tipo de batería de almacenamiento dura, en promedio, 3.0 años,
+con una desviación estándar de 0.5 años. Suponga que las duraciones de
+la batería se distribuyen normalmente, encuentre la probabilidad de que
+:
+
+**a) Una bateria dure menos de 2.3 años**
+
+Al estandarizar el valor x = 2.3 y usar la función de excel
+`=DISTR.NORM.ESTAND.N(-1.4,1)` tenemos
+$$\Pr(x<2.3)=\Pr(z<-1.4) =0.0808 $$
+
+```{r,fig.show ='hold', out.width= '45%',fig.align='center', fig.cap= "Ärea bajo la curva a la izquierda de 2.3",}
+graf.nor.s(2.3, para = c(3, 0.5))
+```
+
+**b) Que dure mas de 3.5 años** $\Pr(x>3.5)$
+
+Primero debemos convertir la desigualda a $<$.
+
+$\Pr(x>3.5) = 1 - \Pr(x<3.5)$
+
+Estandarizamos $z = \dfrac{3.5 -3.0}{0.5}=1$ y encontramos la
+probabilidad $\Pr(z<1)$ con la función de excel
+`=DISTR.NORM.ESTAND.N(1,1)`.
+
+$\Pr(x<3.5)= \Pr(z<1)= 0.8413$
+
+Por último encontramos la probabilidad que la bateria dure mas de 3.5
+
+$\Pr(x>3.5) = 1 - 0.8413=0.1587$
+
+```{r,fig.show ='hold', out.width= '45%',fig.align='center', fig.cap= "Ärea bajo la curva a la derecha de 3.5",}
+graf.nor.s(c(3.5,6), para = c(3, 0.5))
+```
+
+**c) En que tiempo fallará el 5 % de la baterias** $\Pr(X<x)=0.05$
+
+En este inciso conocemos la probabilidad pero no el valor de x, el
+procdimiento es inverso.
+
+Primero calculamos el valor de z que deja un área de 0.05 a la izquierda
+$z_{0.05}$. con la función de excel `=INV.NORM.ESTAND(0.05)`
+$$\Pr(Z<z_{0.05})=0.05$$ $$z_{0.05} =-1.6449$$
+
+Después desentandarizamos el resultado
+
+$$x= \mu+\sigma*z_{0.05}=3-0.5*1.6449 =2.1776$$
+
+```{r,fig.show ='hold', out.width= '45%',fig.align='center', fig.cap= "Ärea 0.05 bajo la curva a la izquierda", echo = F}
+graf.dosc(0.05, para = c(3,0.5), cola ="izq")
+```
+
+**d) Confiabilidad a los 2.5 años** LA probabilidad de que las baterias
+fallen despues de los 2.5 años $\Pr(x>2.5)$
+
+$$\Pr(x>2.5) = 1- \Pr(x<2.5) = 1 - 0.1587=0.8413$$
+
+```{r,fig.show ='hold', out.width= '45%',fig.align='center', fig.cap= "Ärea bajo la curva a la derecha de 2.5", echo = FALSE}
+graf.nor.s(c(2.5,6), para = c(3,0.5))
+```
+
+**d) Cuartiles 1, 2 y 3**
+
+$Q_1 = x_{0.25}$ se calcula como $\Pr(X<x_0.25)=0.25$ Como altes es un
+porceso inverso, primero calculamos $z_0.25 = -0.6745$ con la función
+`=INV.NORM.ESTAND(0.25)` y despues desestanzarizamos
+$$Q_1 = x_{0.25}=\mu+\sigma*z_{0.25}=3 + 0.5*(-0.6745)= 2.6628$$ De la
+misma manera se procede para los demas cuartiles
+
+$Q_2 = x_{0.5} = 3 + 0.5 * 0 = 3$
+
+$Q_3 = x_{0.75} = 3 + 0.5 * 0.6745= 3.3373$
+
+```{r, fig.show ='hold', out.width= '30%', fig.align='center', fig.cap= "Cuartil 1, Cuartil 2 y Cuartil 3 ", echo = F}
+par(mar = c(4, 4, .2, .1))
+graf.dosc(0.25, para = c(3, 0.5), cola = "izq")
+graf.dosc(0.5, para = c(3, 0.5), cola = "izq")
+graf.dosc(0.75, para = c(3, 0.5), cola = "izq")
+```
+
+### Ejemplo 1.15
+
+En un proceso industrial el diámetro de un cojinete es un aparte
+componente importante. El comprador establece que las especificaciones
+en el diámetro sean $3+-0.1cm.$la implicación es que ninguna parte que
+caiga fuera de esta especificación se aceptará. Se sabe que en el
+proceso el diámetro de un cojinete tiene una distribución normal con
+media 3.0 y desviación estándar $\sigma=0.005$. En promedio ¿Cuantos
+cojines se descartarán?
+
+Los limite de especificación son:
+
+Limite inferior $x_i = 3-0.1=2.99$
+
+Limite superior $x_s = 3+0.1=3.01$
+
+La fracción de conjinetes que se descartan son aquellos que queden por
+debajo de $x_i$ y por arriba de $x_s$. $$\Pr(x<x_i) + \Pr(x>x_s)$$
+$\Pr(x<2.99)=\Pr(z<-2)=0.0228$
+
+$\Pr(x>3.01)=1- \Pr(x<3.01)= 1- \Pr(z<2)=1 - 0.9772 = 0.0228$
+
+De esta manera la fracción de defectusos es $0.0228+0.0228=0.0456$
+
+```{r, fig.show ='hold', out.width= '30%', fig.align='center', fig.cap= "Fraccion de defectuosos ", echo = F}
+par(mar = c(4, 4, .2, .1))
+graf.dosc(0.04550026, para = c(3, 0.005))
+
+```
+

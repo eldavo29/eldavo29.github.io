@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Rey D. Molina" />
+
+
+<title>Conceptos y aplicación de la distribucion normal</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">David Molina</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Conceptos y aplicación de la distribucion normal</h1>
+<h4 class="author">Rey D. Molina</h4>
+<h4 class="date">10/2/2021</h4>
+
+</div>
+
+
+<div id="distribución-normal" class="section level1">
+<h1>Distribución normal</h1>
+<div id="introducción" class="section level2">
+<h2>Introducción</h2>
+<p>La distribución continua de probabilidad mas importante en todo el campo de la estadística es la distribución normal, su grafica que se denomina <strong>curva normal</strong>, es la curva con forma de campana, la cual describa aproximadamente muchos fenómenos que ocurren en la naturaleza, la industria y la investigación.A menudo se denomina distribución gaussiana, en honor a Kart Friedrich Gauss (1777-1855), también campana de Gauss.</p>
+<div id="función-de-densidad-de-probabilidad" class="section level3">
+<h3>Función de densidad de probabilidad</h3>
+<p>Una variable continua X que tiene una distribución en forma de campana se llama variable aleatoria normal y la función de densidad de probabilidad de una variable aleatoria normal <span class="math inline">\(X\)</span>, con media <span class="math inline">\(\mu\)</span> y desviación estándar <span class="math inline">\(\sigma\)</span>, es</p>
+<p><span class="math display">\[ f(x; \mu, \sigma) = \dfrac{1}{\sqrt{2\pi}\sigma}e^{-\frac{1}{2}\frac{(x-\mu)^2}{\sigma}} \]</span></p>
+<p>donde <span class="math inline">\(\pi = 3.14159\)</span> y <span class="math inline">\(e = 2.71828\)</span>. Es comun llamar a la distrubución normal como <code>curva normal</code>. Dado que la distribución normal no tiene parámetro de forma, siempre mantiene la misma forma de campana, tiene un parametros de localización <span class="math inline">\(\mu\)</span> que nos indica donde se centra la distribución y un parametros de escala <span class="math inline">\(\sigma\)</span> que da la escala al eje <code>x</code>. En la siguiente figura se presenta la curva normal con <span class="math inline">\(\mu =0\)</span>, y <span class="math inline">\(\sigma = 1\)</span> llamada curva normal estándar.</p>
+<div class="figure" style="text-align: center">
+<img src="unidad2_files/figure-html/unnamed-chunk-3-1.png" alt="Curva normal" width="40%" />
+<p class="caption">
+Curva normal
+</p>
+</div>
+</div>
+<div id="propiedades-de-la-curva-normal." class="section level3">
+<h3>Propiedades de la curva normal.</h3>
+<ul>
+<li>La moda que es el punto sobre el eje horizontal donde la curva es un máximo, ocurre en <span class="math inline">\(x = \mu\)</span>,</li>
+<li>La curva es simétrica alrededor del eje vertical a través de la media <span class="math inline">\(\mu\)</span></li>
+<li>La curva tiene sus puntos de inflexión en <span class="math inline">\(\mu +- \sigma\)</span>, es cóncava hacia abajo si <span class="math inline">\(\mu - \sigma &lt;= x &lt;= \mu + \sigma\)</span> , y es cóncava hacia arriba en cualquier otro punto.</li>
+<li>La curva normal se aproxima al eje horizontal de manera asintótica conforme nos alejamos de la media en cualquier dirección.</li>
+<li>El área total bajo la curva y sobre el eje horizontal es igual a 1</li>
+</ul>
+</div>
+<div id="distribucion-normal-estándar" class="section level3">
+<h3>Distribucion normal estándar</h3>
+<p>Las observaciones de cualquier variable aleatoria <span class="math inline">\(x\)</span> pueden se transformada a un nuevo conjunto de observaciones de una variable aleatoria con media 0 y varianza 1, esto puede realizarse con la transformación <span class="math display">\[ Z = \dfrac{x-\mu}{\sigma}\]</span> La distribución de una variable aleatoria con media 0 (<span class="math inline">\(\mu = 0\)</span>)y varianza 1 (<span class="math inline">\(\sigma^2 =1\)</span>) se le llama distribución normal estándar. Así <span class="math inline">\(Z ~ n(0,1)\)</span></p>
+</div>
+<div id="ejemplo-1.12" class="section level3">
+<h3>Ejemplo 1.12</h3>
+<p>Dada una distribución normal con <span class="math inline">\(\mu = 50\)</span> y <span class="math inline">\(\sigma =10\)</span>. Encuentre la probabilidad de que X tome un valor</p>
+<ol style="list-style-type: lower-alpha">
+<li>Menor de 48</li>
+<li>Mayor de 48</li>
+<li>Entre 45 y 62</li>
+<li>El valor de <span class="math inline">\(k\)</span> que deja un total del 45% de los datos a la derecha</li>
+</ol>
+<p><strong>Solución</strong></p>
+<p><strong>a) Menor de 48.</strong> <span class="math inline">\(\Pr(x &lt; 48)\)</span></p>
+<p>En ete problema debemos encontrar el área bajo la curva a la izquierda de 48 como se muestra en la fig 2. Sin embargo para utilizar las trabajas de distribución normal estándar debemos primero estandarizar el valor de x = 48. <span class="math display">\[ z = \dfrac{48 - 50}{10} = -0.2\]</span></p>
+<p>De esta manera <span class="math inline">\(\Pr(x&lt;48) = \Pr(z&lt;-0.2)\)</span> como se muestra en la figura 2, del lado izquierdo se presenta una curva normal con <span class="math inline">\(\mu =50\)</span> y <span class="math inline">\(\sigma = 10\)</span>, miestras que del lado derecho se presenta la distribución normal estándar. Ambas áreas bajo la curva son iguales.</p>
+<p>La función <code>=DISTR.NORM.ESTAND.N(-0.2,1)</code> da como resultado <span class="math inline">\(\Pr(z&lt;-0.2) = 0.4207\)</span>, es decir <span class="math inline">\(\Pr(x&lt;48)=0.4207\)</span>.</p>
+<div class="figure" style="text-align: center">
+<img src="unidad2_files/figure-html/unnamed-chunk-4-1.png" alt="Curva normal" width="45%" /><img src="unidad2_files/figure-html/unnamed-chunk-4-2.png" alt="Curva normal" width="45%" />
+<p class="caption">
+Curva normal
+</p>
+</div>
+<p><strong>b) Mayor que 48.</strong> <span class="math inline">\(\Pr(x&gt;48)\)</span></p>
+<p>Como se habia mencionado anteriormente el área bajo la curva es 1, entonces al sumar la probabilidad que x sea menor que 48 con la probabilidad que x sea mayor de 48 tenemos el área total. <span class="math display">\[\Pr(x&lt;480) +\Pr(x&gt;48) =1\]</span> por sustracción <span class="math display">\[ \Pr(x&gt;48) =1-\Pr(x&lt;480) = 1-0.4207=0.5793\]</span></p>
+<p><strong>c) Entre 45 y 62</strong> <span class="math inline">\(\Pr(45&lt;x&lt;62)\)</span> Para encotrar esta probabiliada primero encontramos <span class="math inline">\(\Pr(x&lt;62)\)</span> el área bajo la curva a la izquierda de 62 (primer gráfico de la Figura 3). Sin embargo el área que nos interesa es la que se encuentra entre <span class="math inline">\(45&lt;x&lt;62\)</span> por lo que se le debe restar <span class="math inline">\(\Pr(x&lt;45)\)</span> (grafico del medio de la figura 2) para que resulte el área del intervalo (grafico de la derecha de la figura 2).</p>
+<p><span class="math display">\[\Pr(45&lt;x&lt;62) = \Pr(x&lt;62)-\Pr(x&lt;45)\]</span> Para encontrar estos valores estandarizamos <span class="math inline">\(z_1 = \dfrac{45 - 50}{10} = -0.5\)</span> y <span class="math inline">\(z_2 = \dfrac{62 - 50}{10} = 1.2\)</span>. Así</p>
+<p><span class="math inline">\(\Pr(x&lt;45) = \Pr(z_1&lt;-0.5)=0.3085\)</span> <code>=DISTR.NORM.ESTAND.N(-0.5,1)</code></p>
+<p><span class="math inline">\(\Pr(x&lt;62) = \Pr(z_2&lt;1.2)=0.8849\)</span> <code>=DISTR.NORM.ESTAND.N(1.2,1)</code> y</p>
+<p><span class="math inline">\(Pr(45&lt;x&lt;62) = \Pr(x&lt;62)-\Pr(x&lt;45)=0.8849-0.3085 = 0.5764\)</span></p>
+<div class="figure" style="text-align: center">
+<img src="unidad2_files/figure-html/unnamed-chunk-5-1.png" alt="Área bajo la curva. a) Iquierda de 0.62, b) Iquierda de 0.45, c) Entre 0.45 y 0.62 " width="30%" /><img src="unidad2_files/figure-html/unnamed-chunk-5-2.png" alt="Área bajo la curva. a) Iquierda de 0.62, b) Iquierda de 0.45, c) Entre 0.45 y 0.62 " width="30%" /><img src="unidad2_files/figure-html/unnamed-chunk-5-3.png" alt="Área bajo la curva. a) Iquierda de 0.62, b) Iquierda de 0.45, c) Entre 0.45 y 0.62 " width="30%" />
+<p class="caption">
+Área bajo la curva. a) Iquierda de 0.62, b) Iquierda de 0.45, c) Entre 0.45 y 0.62
+</p>
+</div>
+<p><strong>d) El valor x que deje un total del 45% de los datos a la derecha</strong> <span class="math inline">\(\Pr(X&gt;x) = 0.45\)</span>.</p>
+<p>En este caso el procedimiento es inverso, contamos con la probabilidad (0.45), pero desconocemos el valor de x.</p>
+<ol style="list-style-type: decimal">
+<li>Primero debemos cambiar el signo <span class="math inline">\(&gt;\)</span> por <span class="math inline">\(&lt;\)</span>.</li>
+</ol>
+<p><span class="math display">\[\Pr(X&lt;x)= 1 - \Pr(X&gt;x)= 1- 0.45 = 0.55\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Encontrar el valor z tal que deje un área de 0.55 a la izquierda de la distribucion normal estándar <span class="math inline">\(z_{0.55}\)</span>. La función en EXCEL <code>=INV.NORM.ESTAND(0.55)</code> <span class="math display">\[\Pr(Z&lt;z_{0.55})=0.55 = 0.1257\]</span></p></li>
+<li><p>Convertir el valor <span class="math inline">\(z_{0.55}\)</span> en un valor <span class="math inline">\(x\)</span> al despejar <span class="math inline">\(x\)</span> de la estandarización</p></li>
+</ol>
+<p><span class="math display">\[x=\mu+\sigma*z_{0.55}\]</span> <span class="math display">\[x=50+10*0.1257 = 51.25\]</span></p>
+<div class="figure" style="text-align: center">
+<img src="unidad2_files/figure-html/unnamed-chunk-6-1.png" alt="Area de 0.45 bajo la curva derecha" width="45%" />
+<p class="caption">
+Area de 0.45 bajo la curva derecha
+</p>
+</div>
+</div>
+<div id="ejemplo-1.13" class="section level3">
+<h3>Ejemplo 1.13</h3>
+<p>Cierto tipo de batería de almacenamiento dura, en promedio, 3.0 años, con una desviación estándar de 0.5 años. Suponga que las duraciones de la batería se distribuyen normalmente, encuentre la probabilidad de que :</p>
+<p><strong>a) Una bateria dure menos de 2.3 años</strong></p>
+<p>Al estandarizar el valor x = 2.3 y usar la función de excel <code>=DISTR.NORM.ESTAND.N(-1.4,1)</code> tenemos <span class="math display">\[\Pr(x&lt;2.3)=\Pr(z&lt;-1.4) =0.0808 \]</span></p>
+<pre class="r"><code>graf.nor.s(2.3, para = c(3, 0.5))</code></pre>
+<div class="figure" style="text-align: center">
+<img src="unidad2_files/figure-html/unnamed-chunk-7-1.png" alt="Ärea bajo la curva a la izquierda de 2.3" width="45%" />
+<p class="caption">
+Ärea bajo la curva a la izquierda de 2.3
+</p>
+</div>
+<p><strong>b) Que dure mas de 3.5 años</strong> <span class="math inline">\(\Pr(x&gt;3.5)\)</span></p>
+<p>Primero debemos convertir la desigualda a <span class="math inline">\(&lt;\)</span>.</p>
+<p><span class="math inline">\(\Pr(x&gt;3.5) = 1 - \Pr(x&lt;3.5)\)</span></p>
+<p>Estandarizamos <span class="math inline">\(z = \dfrac{3.5 -3.0}{0.5}=1\)</span> y encontramos la probabilidad <span class="math inline">\(\Pr(z&lt;1)\)</span> con la función de excel <code>=DISTR.NORM.ESTAND.N(1,1)</code>.</p>
+<p><span class="math inline">\(\Pr(x&lt;3.5)= \Pr(z&lt;1)= 0.8413\)</span></p>
+<p>Por último encontramos la probabilidad que la bateria dure mas de 3.5</p>
+<p><span class="math inline">\(\Pr(x&gt;3.5) = 1 - 0.8413=0.1587\)</span></p>
+<pre class="r"><code>graf.nor.s(c(3.5,6), para = c(3, 0.5))</code></pre>
+<div class="figure" style="text-align: center">
+<img src="unidad2_files/figure-html/unnamed-chunk-8-1.png" alt="Ärea bajo la curva a la derecha de 3.5" width="45%" />
+<p class="caption">
+Ärea bajo la curva a la derecha de 3.5
+</p>
+</div>
+<p><strong>c) En que tiempo fallará el 5 % de la baterias</strong> <span class="math inline">\(\Pr(X&lt;x)=0.05\)</span></p>
+<p>En este inciso conocemos la probabilidad pero no el valor de x, el procdimiento es inverso.</p>
+<p>Primero calculamos el valor de z que deja un área de 0.05 a la izquierda <span class="math inline">\(z_{0.05}\)</span>. con la función de excel <code>=INV.NORM.ESTAND(0.05)</code> <span class="math display">\[\Pr(Z&lt;z_{0.05})=0.05\]</span> <span class="math display">\[z_{0.05} =-1.6449\]</span></p>
+<p>Después desentandarizamos el resultado</p>
+<p><span class="math display">\[x= \mu+\sigma*z_{0.05}=3-0.5*1.6449 =2.1776\]</span></p>
+<div class="figure" style="text-align: center">
+<img src="unidad2_files/figure-html/unnamed-chunk-9-1.png" alt="Ärea 0.05 bajo la curva a la izquierda" width="45%" />
+<p class="caption">
+Ärea 0.05 bajo la curva a la izquierda
+</p>
+</div>
+<p><strong>d) Confiabilidad a los 2.5 años</strong> LA probabilidad de que las baterias fallen despues de los 2.5 años <span class="math inline">\(\Pr(x&gt;2.5)\)</span></p>
+<p><span class="math display">\[\Pr(x&gt;2.5) = 1- \Pr(x&lt;2.5) = 1 - 0.1587=0.8413\]</span></p>
+<div class="figure" style="text-align: center">
+<img src="unidad2_files/figure-html/unnamed-chunk-10-1.png" alt="Ärea bajo la curva a la derecha de 2.5" width="45%" />
+<p class="caption">
+Ärea bajo la curva a la derecha de 2.5
+</p>
+</div>
+<p><strong>d) Cuartiles 1, 2 y 3</strong></p>
+<p><span class="math inline">\(Q_1 = x_{0.25}\)</span> se calcula como <span class="math inline">\(\Pr(X&lt;x_0.25)=0.25\)</span> Como altes es un porceso inverso, primero calculamos <span class="math inline">\(z_0.25 = -0.6745\)</span> con la función <code>=INV.NORM.ESTAND(0.25)</code> y despues desestanzarizamos <span class="math display">\[Q_1 = x_{0.25}=\mu+\sigma*z_{0.25}=3 + 0.5*(-0.6745)= 2.6628\]</span> De la misma manera se procede para los demas cuartiles</p>
+<p><span class="math inline">\(Q_2 = x_{0.5} = 3 + 0.5 * 0 = 3\)</span></p>
+<p><span class="math inline">\(Q_3 = x_{0.75} = 3 + 0.5 * 0.6745= 3.3373\)</span></p>
+<div class="figure" style="text-align: center">
+<img src="unidad2_files/figure-html/unnamed-chunk-11-1.png" alt="Cuartil 1, Cuartil 2 y Cuartil 3 " width="30%" /><img src="unidad2_files/figure-html/unnamed-chunk-11-2.png" alt="Cuartil 1, Cuartil 2 y Cuartil 3 " width="30%" /><img src="unidad2_files/figure-html/unnamed-chunk-11-3.png" alt="Cuartil 1, Cuartil 2 y Cuartil 3 " width="30%" />
+<p class="caption">
+Cuartil 1, Cuartil 2 y Cuartil 3
+</p>
+</div>
+</div>
+<div id="ejemplo-1.15" class="section level3">
+<h3>Ejemplo 1.15</h3>
+<p>En un proceso industrial el diámetro de un cojinete es un aparte componente importante. El comprador establece que las especificaciones en el diámetro sean <span class="math inline">\(3+-0.1cm.\)</span>la implicación es que ninguna parte que caiga fuera de esta especificación se aceptará. Se sabe que en el proceso el diámetro de un cojinete tiene una distribución normal con media 3.0 y desviación estándar <span class="math inline">\(\sigma=0.005\)</span>. En promedio ¿Cuantos cojines se descartarán?</p>
+<p>Los limite de especificación son:</p>
+<p>Limite inferior <span class="math inline">\(x_i = 3-0.1=2.99\)</span></p>
+<p>Limite superior <span class="math inline">\(x_s = 3+0.1=3.01\)</span></p>
+<p>La fracción de conjinetes que se descartan son aquellos que queden por debajo de <span class="math inline">\(x_i\)</span> y por arriba de <span class="math inline">\(x_s\)</span>. <span class="math display">\[\Pr(x&lt;x_i) + \Pr(x&gt;x_s)\]</span> <span class="math inline">\(\Pr(x&lt;2.99)=\Pr(z&lt;-2)=0.0228\)</span></p>
+<p><span class="math inline">\(\Pr(x&gt;3.01)=1- \Pr(x&lt;3.01)= 1- \Pr(z&lt;2)=1 - 0.9772 = 0.0228\)</span></p>
+<p>De esta manera la fracción de defectusos es <span class="math inline">\(0.0228+0.0228=0.0456\)</span></p>
+<div class="figure" style="text-align: center">
+<img src="unidad2_files/figure-html/unnamed-chunk-12-1.png" alt="Fraccion de defectuosos " width="30%" />
+<p class="caption">
+Fraccion de defectuosos
+</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
