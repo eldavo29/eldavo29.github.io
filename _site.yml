@@ -9,7 +9,7 @@ navbar:
       href: about.html
     - text: "Unidad 2"
       href: unidad2.html
-    -text: "Comparación dos medias"
+    - text: "Comparación dos medias"
       href: interv_medias.html
   output:
   html_document:

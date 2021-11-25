@@ -1,5 +1,5 @@
 ---
-title: "Intervalos de confianza"
+title: "Comparación de medias"
 author: "Rey D. Molina"
 date: "22/9/2021"
 output:
@@ -14,16 +14,18 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Comparación de medias 
-En muchos casos puede ser de interés comparar la media de dos poblaciones diferentes,
+# Introducción
+En muchos casos puede ser de interés comparar la media de dos poblaciones diferentes
 
-El procedimiento para realizar las comparaciones consiste en tomar una muestra aleatoria de cada población, calcular los estadísticos, definir un nivel de cofianza y realizar la inferencia de diferencia de medias. 
+## Distribución muestral de $\bar{x_1}-\bar{x_2}$
 
-Para realizar las comparaciones es necesario conocer la distribción muestral de 
+Para realizar las comparaciones es necesario conocer primero la distribción muestral del estadístico $\bar{x_1}-\bar{x_2}$ 
 Si tenemos dos poblaciones con medias $\mu_1$ y $\mu_2$, y varianza $\sigma_1$ y $\sigma_2$, respectivamente, el estadístico que da un estimador puntual de la diferencia entre $\mu_1$ y $\mu_2$ es $\bar{X}_1-\bar{X}_2$. Por lo tanto, para obtener una estimación puntual de $\mu_1-\mu_2$ se selccionan dos muestras aleatorias independientes, una de cada población, de tamaño $n_1$ y $n_2$ y se calcula $\bar{x}_1-\bar{x}_2$, la diferencia de las medias muestrales. 
 
-Se puede esperar que la distribución muestral de $\bar{X}_1-\bar{X}_2$ está distribuida de forma aproximadamente normal con media $\mu_{\bar{x}_1}-\mu_{\bar{x}_2}=\mu_1-\mu_2$ y desviación estándar $\sigma_{\bar{X}_1-\bar{X}_2} = \sqrt{\sigma^2_1/n_1+\sigma^2_2/n_2}$
+Se puede esperar que el estadístico $\bar{X}_1-\bar{X}_2$ esté distribuida de forma aproximadamente normal con media $$\mu_{\bar{X}_1-\bar{X_2 }}=\mu_1-\mu_2$$ y desviación estándar $$\sigma_{\bar{X}_1-\bar{X}_2} = \sqrt{\dfrac{\sigma^2_1}{n_1}+\dfrac{\sigma^2_2}{n_2}}$$, 
+es posible notar que a mayor tamaño de muestra se tiene una desviación estándar menor.
 
+Conociendo la distribución de muestral de la diferencias de medias, y con un nivel de confianza establecido se pueden realizar comparaciones entre 
 
 La comparación de medias puede ser llevada a cabo mediante 
 
@@ -34,13 +36,19 @@ El primer caso consiste en la estimación de la diferencia de medias $\mu_1-\mu_
 
 En el segundo caso consiste en realizar el proceso de prueba de hipótesis 
 
+# Intervalo de confianza
+
 ## Intervalo de confianza para la diferencia de medias, varianzas iguales desconocidas 
 Si $\bar{x}_1$ y $\bar{x}_2$ son las medias de muestras aleatorias independientes con tamaños $n_1$ y $n_2$, respectivamente, tomadas de poblaciones más o menos normales con varianzas iguales pero desonocidas, un intervalo de confianza del $100(1-\alpha)\%$ para  diferencia de medias $\mu_1-\mu_2$ esta dado por
 
 \[ (\bar{x}_1-\bar{x}_2)-t_{\alpha_2}s_p\sqrt{\dfrac{1}{n_1}+\dfrac{1}{n_2}}<\mu_1-\mu_2<(\bar{x}_1-\bar{x}_2)+t_{\alpha_2}s_p\sqrt{\dfrac{1}{n_1}+\dfrac{1}{n_2}} \]
 
 donde $s_p$ es la estimación agrupada de la desviación estándar de la población y $t_\alpha/2$ es el valor $t$ con $v=n_1+n_2-2$ grados de libertad, que deja un área de $\alpha/2$ a la derecha.
-\subsection*{Ejemplo 7}
+
+
+# Prueba de hipótesis 
+
+
 Se considera usar dos marcas diferentes de pintura látex. El tiempo de secado en horas se mide en especímenes de muestras de uso de las dos pinturas. Se seleccionan 15 especímenes de cada una y los tiempos de secado son los siguientes:
 
 ```{r, echo = F}

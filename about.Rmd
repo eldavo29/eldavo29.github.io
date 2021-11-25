@@ -1,5 +1,5 @@
 ---
-title: "About This Website"
+title: "Diseño de experimentos"
 ---
 
-More about this website.
+Diseño de experimentos.

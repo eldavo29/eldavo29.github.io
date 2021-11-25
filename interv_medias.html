@@ -12,7 +12,7 @@
 <meta name="author" content="Rey D. Molina" />
 
 
-<title>Intervalos de confianza</title>
+<title>Comparación de medias</title>
 
 <script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -327,6 +327,9 @@ div.tocify {
 <li>
   <a href="unidad2.html">Unidad 2</a>
 </li>
+<li>
+  <a href="interv_medias.html">Comparación dos medias</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -339,19 +342,21 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Intervalos de confianza</h1>
+<h1 class="title toc-ignore">Comparación de medias</h1>
 <h4 class="author">Rey D. Molina</h4>
 <h4 class="date">22/9/2021</h4>
 
 </div>
 
 
-<div id="comparación-de-medias" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Comparación de medias</h1>
-<p>En muchos casos puede ser de interés comparar la media de dos poblaciones diferentes,</p>
-<p>El procedimiento para realizar las comparaciones consiste en tomar una muestra aleatoria de cada población, calcular los estadísticos, definir un nivel de cofianza y realizar la inferencia de diferencia de medias.</p>
-<p>Para realizar las comparaciones es necesario conocer la distribción muestral de Si tenemos dos poblaciones con medias <span class="math inline">\(\mu_1\)</span> y <span class="math inline">\(\mu_2\)</span>, y varianza <span class="math inline">\(\sigma_1\)</span> y <span class="math inline">\(\sigma_2\)</span>, respectivamente, el estadístico que da un estimador puntual de la diferencia entre <span class="math inline">\(\mu_1\)</span> y <span class="math inline">\(\mu_2\)</span> es <span class="math inline">\(\bar{X}_1-\bar{X}_2\)</span>. Por lo tanto, para obtener una estimación puntual de <span class="math inline">\(\mu_1-\mu_2\)</span> se selccionan dos muestras aleatorias independientes, una de cada población, de tamaño <span class="math inline">\(n_1\)</span> y <span class="math inline">\(n_2\)</span> y se calcula <span class="math inline">\(\bar{x}_1-\bar{x}_2\)</span>, la diferencia de las medias muestrales.</p>
-<p>Se puede esperar que la distribución muestral de <span class="math inline">\(\bar{X}_1-\bar{X}_2\)</span> está distribuida de forma aproximadamente normal con media <span class="math inline">\(\mu_{\bar{x}_1}-\mu_{\bar{x}_2}=\mu_1-\mu_2\)</span> y desviación estándar <span class="math inline">\(\sigma_{\bar{X}_1-\bar{X}_2} = \sqrt{\sigma^2_1/n_1+\sigma^2_2/n_2}\)</span></p>
+<div id="introducción" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Introducción</h1>
+<p>En muchos casos puede ser de interés comparar la media de dos poblaciones diferentes</p>
+<div id="distribución-muestral-de-barx_1-barx_2" class="section level2" number="1.1">
+<h2 number="1.1"><span class="header-section-number">1.1</span> Distribución muestral de <span class="math inline">\(\bar{x_1}-\bar{x_2}\)</span></h2>
+<p>Para realizar las comparaciones es necesario conocer primero la distribción muestral del estadístico <span class="math inline">\(\bar{x_1}-\bar{x_2}\)</span> Si tenemos dos poblaciones con medias <span class="math inline">\(\mu_1\)</span> y <span class="math inline">\(\mu_2\)</span>, y varianza <span class="math inline">\(\sigma_1\)</span> y <span class="math inline">\(\sigma_2\)</span>, respectivamente, el estadístico que da un estimador puntual de la diferencia entre <span class="math inline">\(\mu_1\)</span> y <span class="math inline">\(\mu_2\)</span> es <span class="math inline">\(\bar{X}_1-\bar{X}_2\)</span>. Por lo tanto, para obtener una estimación puntual de <span class="math inline">\(\mu_1-\mu_2\)</span> se selccionan dos muestras aleatorias independientes, una de cada población, de tamaño <span class="math inline">\(n_1\)</span> y <span class="math inline">\(n_2\)</span> y se calcula <span class="math inline">\(\bar{x}_1-\bar{x}_2\)</span>, la diferencia de las medias muestrales.</p>
+<p>Se puede esperar que el estadístico <span class="math inline">\(\bar{X}_1-\bar{X}_2\)</span> esté distribuida de forma aproximadamente normal con media <span class="math display">\[\mu_{\bar{X}_1-\bar{X_2 }}=\mu_1-\mu_2\]</span> y desviación estándar <span class="math display">\[\sigma_{\bar{X}_1-\bar{X}_2} = \sqrt{\dfrac{\sigma^2_1}{n_1}+\dfrac{\sigma^2_2}{n_2}}\]</span>, es posible notar que a mayor tamaño de muestra se tiene una desviación estándar menor.</p>
+<p>Conociendo la distribución de muestral de la diferencias de medias, y con un nivel de confianza establecido se pueden realizar comparaciones entre</p>
 <p>La comparación de medias puede ser llevada a cabo mediante</p>
 <ul>
 <li>Intervalos de confiaza</li>
@@ -359,11 +364,19 @@ div.tocify {
 </ul>
 <p>El primer caso consiste en la estimación de la diferencia de medias <span class="math inline">\(\mu_1-\mu_2\)</span> a través de intervalos de confianza de la forma</p>
 <p>En el segundo caso consiste en realizar el proceso de prueba de hipótesis</p>
-<div id="intervalo-de-confianza-para-la-diferencia-de-medias-varianzas-iguales-desconocidas" class="section level2" number="1.1">
-<h2 number="1.1"><span class="header-section-number">1.1</span> Intervalo de confianza para la diferencia de medias, varianzas iguales desconocidas</h2>
+</div>
+</div>
+<div id="intervalo-de-confianza" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Intervalo de confianza</h1>
+<div id="intervalo-de-confianza-para-la-diferencia-de-medias-varianzas-iguales-desconocidas" class="section level2" number="2.1">
+<h2 number="2.1"><span class="header-section-number">2.1</span> Intervalo de confianza para la diferencia de medias, varianzas iguales desconocidas</h2>
 <p>Si <span class="math inline">\(\bar{x}_1\)</span> y <span class="math inline">\(\bar{x}_2\)</span> son las medias de muestras aleatorias independientes con tamaños <span class="math inline">\(n_1\)</span> y <span class="math inline">\(n_2\)</span>, respectivamente, tomadas de poblaciones más o menos normales con varianzas iguales pero desonocidas, un intervalo de confianza del <span class="math inline">\(100(1-\alpha)\%\)</span> para diferencia de medias <span class="math inline">\(\mu_1-\mu_2\)</span> esta dado por</p>
 <p><span class="math display">\[ (\bar{x}_1-\bar{x}_2)-t_{\alpha_2}s_p\sqrt{\dfrac{1}{n_1}+\dfrac{1}{n_2}}&lt;\mu_1-\mu_2&lt;(\bar{x}_1-\bar{x}_2)+t_{\alpha_2}s_p\sqrt{\dfrac{1}{n_1}+\dfrac{1}{n_2}} \]</span></p>
-donde <span class="math inline">\(s_p\)</span> es la estimación agrupada de la desviación estándar de la población y <span class="math inline">\(t_\alpha/2\)</span> es el valor <span class="math inline">\(t\)</span> con <span class="math inline">\(v=n_1+n_2-2\)</span> grados de libertad, que deja un área de <span class="math inline">\(\alpha/2\)</span> a la derecha.
+<p>donde <span class="math inline">\(s_p\)</span> es la estimación agrupada de la desviación estándar de la población y <span class="math inline">\(t_\alpha/2\)</span> es el valor <span class="math inline">\(t\)</span> con <span class="math inline">\(v=n_1+n_2-2\)</span> grados de libertad, que deja un área de <span class="math inline">\(\alpha/2\)</span> a la derecha.</p>
+</div>
+</div>
+<div id="prueba-de-hipótesis" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> Prueba de hipótesis</h1>
 <p>Se considera usar dos marcas diferentes de pintura látex. El tiempo de secado en horas se mide en especímenes de muestras de uso de las dos pinturas. Se seleccionan 15 especímenes de cada una y los tiempos de secado son los siguientes:</p>
 <table>
 <thead>
@@ -442,7 +455,6 @@ Dat_P &lt;- data.frame(Pintura, Tiempo)
 boxplot(Tiempo ~ Pintura)
 title(&quot;Gráfico Tiempo ~ Pintura&quot;)</code></pre>
 <p><img src="interv_medias_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-</div>
 </div>
 
 
