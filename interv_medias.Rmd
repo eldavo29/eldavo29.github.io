@@ -46,6 +46,7 @@ Si $\bar{x}_1$ y $\bar{x}_2$ son las medias de muestras aleatorias independiente
 donde $s_p$ es la estimación agrupada de la desviación estándar de la población y $t_\alpha/2$ es el valor $t$ con $v=n_1+n_2-2$ grados de libertad, que deja un área de $\alpha/2$ a la derecha.
 
 ```{r, echo=FALSE, fig.align='center'}
+par(mar = c(1.5, 2, 1.5, 1))
 dif <- numeric()
 for(i in 1: 10000){dif[i] <- mean(rnorm(8, 5, 1))- mean(rnorm(8, 3, 1.3))}
 layout(matrix(c(1,2,3,4), nrow = 2))
