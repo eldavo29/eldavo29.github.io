@@ -14,8 +14,8 @@
 
 <title>Comparación de medias</title>
 
-<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -373,6 +373,7 @@ div.tocify {
 <p>Si <span class="math inline">\(\bar{x}_1\)</span> y <span class="math inline">\(\bar{x}_2\)</span> son las medias de muestras aleatorias independientes con tamaños <span class="math inline">\(n_1\)</span> y <span class="math inline">\(n_2\)</span>, respectivamente, tomadas de poblaciones más o menos normales con varianzas iguales pero desonocidas, un intervalo de confianza del <span class="math inline">\(100(1-\alpha)\%\)</span> para diferencia de medias <span class="math inline">\(\mu_1-\mu_2\)</span> esta dado por</p>
 <p><span class="math display">\[ (\bar{x}_1-\bar{x}_2)-t_{\alpha_2}s_p\sqrt{\dfrac{1}{n_1}+\dfrac{1}{n_2}}&lt;\mu_1-\mu_2&lt;(\bar{x}_1-\bar{x}_2)+t_{\alpha_2}s_p\sqrt{\dfrac{1}{n_1}+\dfrac{1}{n_2}} \]</span></p>
 <p>donde <span class="math inline">\(s_p\)</span> es la estimación agrupada de la desviación estándar de la población y <span class="math inline">\(t_\alpha/2\)</span> es el valor <span class="math inline">\(t\)</span> con <span class="math inline">\(v=n_1+n_2-2\)</span> grados de libertad, que deja un área de <span class="math inline">\(\alpha/2\)</span> a la derecha.</p>
+<p><img src="interv_medias_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="prueba-de-hipótesis" class="section level1" number="3">
@@ -454,7 +455,7 @@ Pintura &lt;- rep(c(&quot;A&quot;, &quot;B&quot;), each = 15)
 Dat_P &lt;- data.frame(Pintura, Tiempo)
 boxplot(Tiempo ~ Pintura)
 title(&quot;Gráfico Tiempo ~ Pintura&quot;)</code></pre>
-<p><img src="interv_medias_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="interv_medias_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 
 
